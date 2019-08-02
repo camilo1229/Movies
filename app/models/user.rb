@@ -3,7 +3,8 @@ class User < ApplicationRecord
 	include BCrypt
 
 	mount_uploader :avatar, AvatarUploader
-
+	
+	validates_uniqueness_of :email
 	validates_presence_of :email, :name, :last_name, :password
 	validates_confirmation_of :password, on: :create
 	validates_presence_of :password_confirmation, if: :password_changed?
@@ -26,6 +27,12 @@ class User < ApplicationRecord
 	def validate_password(insecure)
 		Password.new(self.password) == insecure
 	end
+
+	def profile_details
+    {
+      name: name, last_name: last_name, email: email, avatar: avatar.url, phone: phone
+    }
+  end
 
 	private
 		def encrypt_password
