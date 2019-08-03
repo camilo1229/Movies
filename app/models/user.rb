@@ -2,6 +2,8 @@ class User < ApplicationRecord
 	include AASM
 	include BCrypt
 
+	has_many :movies
+
 	mount_uploader :avatar, AvatarUploader
 	
 	validates_uniqueness_of :email

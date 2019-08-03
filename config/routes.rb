@@ -10,6 +10,17 @@ Rails.application.routes.draw do
           get 'profile'
         end
 			end
+
+			resources :movies, except: [:destroy] do
+				member do
+					post 'enable'
+					post 'disable'
+				end
+				collection do
+					get 'search'
+					get 'my'
+				end
+			end
 			
 		end
 	end
